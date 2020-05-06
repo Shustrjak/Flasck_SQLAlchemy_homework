@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title%}
+Recipe title
+{% endblock %}
+
+{% block navbar%}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('index')}}">Главная</a></li>
+                <li class="nav-item active"><a class="nav-link" href="{{ url_for('recipes.index')}}">Рецепты</a></li>
+{% endblock%}
+
+{% block content %}
+<div class="margin-8"></div>
+
+<h2>Рецепты</h2>
+
+
+<div class="nav">
+    <nav>
+      <ul class="pagination justify-content-center">
+          <li {% if not pages.has_prev %} class="page-item disabled" {% endif %} >
+              <a class="page-link" href="./?page={{pages.prev_num}}" tabindex="-1">&laquo;</a>
+          </li>
+          {% for page in pages.iter_pages() %}
+          <li {% if page == pages.page%} class="page-item active" {% endif%} >
+              <a class="page-link" href="./?page={{page}}">{{page}}</a>
+          </li>
+          {% endfor%}
+          <li {% if not pages.has_next %} class="page-item disabled" {% endif %} >
+              <a class="page-link" href="./?page={{pages.next_num}}">&raquo;</a>
+          </li>
+      </ul>
+    </nav>
+</div>
+
+<div class="margin-8"></div>
+{% for recipes in pages.items %}
+
+    <div class="card mb-5" style="width: 12rem;">
+        <img src="/static/img/png/image.png" class="card-img-top img-thumbnail" alt="{{ recipes.title }}">
+        <div class="card-body">
+            <h5 class="card-title">{{ recipes.title }}</h5>
+            <a href="{{ url_for('recipes.recipe_detail', slug=recipes.slug)}}" class="btn btn-primary" target="_blank">К рецепту</a>
+        </div>
+    </div>
+
+{% endfor%}
+
+
+{% endblock %}

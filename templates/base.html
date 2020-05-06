@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet"
+              href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+              integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+              crossorigin="anonymous">
+        <link rel="stylesheet"
+              href="/static/css/main.css">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+                integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+                integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+                crossorigin="anonymous"></script>
+        <title>
+            {% block title%}
+            Base title
+            {% endblock%} | Flask App
+        </title>
+    </head>
+    <body>
+        <div class="header">
+            <div class="container">
+                <h1>
+                    <a href="index.html">CookBook</a>
+                </h1>
+                <p class="project-name">Блог кулинара</p>
+                <nav class="navbar navbar-expand-lg">
+                    <ul class="navbar-nav mr-auto">
+                        {% block navbar%}
+                        <li class="nav-item active"><a class="nav-link" href="{{ url_for('index')}}">Главная</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('recipes.index')}}">Рецепты</a></li>
+                        {% endblock%}
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0" method="GET">
+
+                        <input class="form-control mr-sm-2"
+                               type="search"
+                               placeholder="ваш запрос"
+                               aria-label="Search"
+                               name="q"
+                               value="{{ request.args.get('q', '') }}">
+                        <button class="btn btn-search my-2 my-sm-0" type="submit">Поиск</button>
+                    </form>
+                </nav>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="container">
+                    <div class="row row-cols-12">
+                        <div class="col-9">
+                            <div class="w-100"></div>
+
+                            {% block content %}
+                            <div class="margin-8"></div>
+                                <h2>Рецепты</h2>
+                                <div class="margin-8"></div>
+                                {% for recipes in recipes_posts %}
+                                <div class="card" style="width: 12rem;">
+                                    <img src="/static/img/png/image.png" class="card-img-top img-thumbnail" alt="{{ recipes.title }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ recipes.title }}</h5>
+                                        <a href="{{ url_for('recipes.recipe_detail', slug=recipes.slug)}}" class="btn btn-primary" target="_blank">К рецепту</a>
+                                    </div>
+                                </div>
+                                {% endfor%}
+
+                                {% endblock %}
+
+                            </div>
+
+                            <div class="col-3">
+                                <div class="mar-pad-25"></div>
+                                <form>
+                                    <label for="exampleInputEmail1"><h4>Форма входа:</h4></label>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Логин">
+                                        <small id="emailHelp" class="form-text text-muted">Пользовательское соглашение</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Пароль">
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                        <label class="form-check-label" for="exampleCheck1">Сохранить на этом устройстве</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-enter">Вход</button>
+                                </form>
+                                <div class="mar-pad-50"></div>
+                                <h4 class="card-title">Новости:</h4>
+                                <h6 class="card-subtitle mb-2 text-muted">04.04.2020</h6>
+                                <p class="card-text">Новый сервис wishlist для покупок</p>
+                                <a href="#" class="card-link"> <b>Подробнее</b> </a>
+                                <div class="margin-8"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+            </div>
+        </div>
+    </body>
+</html>
