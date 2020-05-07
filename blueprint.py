@@ -15,7 +15,7 @@ def edit_recipe():
 
         try:
             recipe = Recipe(title=title, text=text)
-            if recipe.title == '':
+            if recipe.title == '' or recipe.text == '':
                 return redirect(url_for('recipes.edit_recipe'))
             else:
                 db.session.add(recipe)
