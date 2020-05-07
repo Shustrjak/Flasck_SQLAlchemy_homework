@@ -59,3 +59,8 @@ def tag_detail(slug):
     tag = Tag.query.filter(Tag.slug == slug).first()
     recipe_items = tag.recipes.all()
     return render_template('recipes/tag_detail.html', tag=tag, recipes=recipe_items)
+
+@recipes.route('/tags')
+def all_tags():
+    tag_names = Tag.query.all()
+    return render_template('recipes/all_tags.html', tag_names=tag_names)
