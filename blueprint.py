@@ -30,14 +30,14 @@ def edit_recipe():
 
 @recipes.route('/')
 def index():
-    q = request.args.get('q')
+    q = request.args.get('q', '')
 
     page = request.args.get('page')
     if page and page.isdigit():
         page = int(page)
     else:
         page = 1
-    if q:
+    if q != '':
         recipes_posts = Recipe.query.filter(Recipe.title.contains(q) | Recipe.text.contains(q))
     else:
         recipes_posts = Recipe.query.order_by(Recipe.published.desc())
