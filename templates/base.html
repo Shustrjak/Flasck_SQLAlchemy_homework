@@ -27,7 +27,7 @@
         <div class="header">
             <div class="container">
                 <h1>
-                    <a href="index.html">CookBook</a>
+                    <a href="{{ url_for('index')}}">CookBook</a>
                 </h1>
                 <p class="project-name">Блог кулинара</p>
                 <nav class="navbar navbar-expand-lg">
@@ -36,6 +36,7 @@
                         <li class="nav-item active"><a class="nav-link" href="{{ url_for('index')}}">Главная</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ url_for('recipes.index')}}">Рецепты</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{url_for('recipes.all_tags')}}">Все теги</a></li>
+                        <li class="nav-item"><a class="nav-link"  href="{{ url_for('recipes.edit_recipe') }}">Добавить новый пост</a></li>
                         {% endblock%}
                     </ul>
                     <form class="form-inline my-2 my-lg-0" method="GET">
@@ -101,7 +102,7 @@
                                 <a href="#" class="card-link"> <b>Подробнее</b> </a>
                                 <div class="margin-8"></div>
 
-                                <a href="{{url_for('recipes.all_tags')}}"><div class="btn btn-primary">все действующие теги</div></a>
+
                             </div>
                         </div>
                     </div>
