@@ -49,16 +49,25 @@ def index():
 
 @recipes.route('/<slug>')
 def recipe_detail(slug):
-    recipe_post = Recipe.query.filter(Recipe.slug == slug).first()
-    tags = recipe_post.tags
-    return render_template('recipes/recipe_detail.html', recipe_post=recipe_post, tags=tags)
+    if Recipe.query.filter(Recipe.slug == slug).first():
+        recipe_post = Recipe.query.filter(Recipe.slug == slug).first()
+        tags = recipe_post.tags
+        return render_template('recipes/recipe_detail.html', recipe_post=recipe_post, tags=tags)
+    else:
+        logging.basicConfig(filename="Error_recipe.log", level=logging.INFO)
+        return render_template('recipes/index.html')
 
 
 @recipes.route('/tag/<slug>')
 def tag_detail(slug):
-    tag = Tag.query.filter(Tag.slug == slug).first()
-    recipe_items = tag.recipes.all()
-    return render_template('recipes/tag_detail.html', tag=tag, recipes=recipe_items)
+    if Tag.query.filter(Tag.slug == slug).first():
+        tag = Tag.query.filter(Tag.slug == slug).first()
+        recipe_items = tag.recipes.all()
+        return render_template('recipes/tag_detail.html', tag=tag, recipes=recipe_items)
+    else:
+        logging.basicConfig(filename="Error_tag.log", level=logging.INFO)
+        return render_template('recipes/all_tags.html')
+
 
 @recipes.route('/tags')
 def all_tags():
