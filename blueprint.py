@@ -47,6 +47,7 @@ def index():
     return render_template('recipes/index.html', recipes_posts=recipes_posts, pages=pages)
 
 
+
 @recipes.route('/<slug>')
 def recipe_detail(slug):
     if Recipe.query.filter(Recipe.slug == slug).first():
@@ -55,18 +56,18 @@ def recipe_detail(slug):
         return render_template('recipes/recipe_detail.html', recipe_post=recipe_post, tags=tags)
     else:
         logging.basicConfig(filename="Error_recipe.log", level=logging.INFO)
-        return render_template('recipes/index.html')
+        return render_template('404/index.html')
 
 
 @recipes.route('/tag/<slug>')
 def tag_detail(slug):
     if Tag.query.filter(Tag.slug == slug).first():
         tag = Tag.query.filter(Tag.slug == slug).first()
-        recipe_items = tag.recipes.all()
+        recipe_items = tag.recipes
         return render_template('recipes/tag_detail.html', tag=tag, recipes=recipe_items)
     else:
         logging.basicConfig(filename="Error_tag.log", level=logging.INFO)
-        return render_template('recipes/all_tags.html')
+        return render_template('404/index.html')
 
 
 @recipes.route('/tags')
