@@ -47,7 +47,6 @@ def index():
     return render_template('recipes/index.html', recipes_posts=recipes_posts, pages=pages)
 
 
-
 @recipes.route('/<slug>')
 def recipe_detail(slug):
     if Recipe.query.filter(Recipe.slug == slug).first():
